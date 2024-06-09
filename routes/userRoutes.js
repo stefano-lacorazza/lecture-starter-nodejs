@@ -22,42 +22,35 @@ router.get('/', async (req, res, next) => {
 });
 
 // POST route for creating a new user
-router.post('/', createUserValid, async (req, res, next) => {
-  try {
+router.post('/', createUserValid, responseMiddleware, async (req, res, next) => {
+  if (!req.error_message) {
     const user = await userService.createUser(req.body);
     res.json(user);
-  } catch (err) {
-    next(err);
   }
+
 });
 
 // GET route for retrieving a user by ID
-router.get('/:id', async (req, res, next) => {
-  try {
+router.get('/:id',updateUserValid, responseMiddleware, async (req, res, next) => {
+  if (!req.error_message) {
     const user = await userService.getUserById(req.params.id);
     res.json(user);
-  } catch (err) {
-    next(err);
-  }
+  } 
 });
 
 // PATCH route for updating a user
-router.patch('/:id', updateUserValid, async (req, res, next) => {
-  try {
+router.patch('/:id', updateUserValid, responseMiddleware,  async (req, res, next) => {
+  if (!req.error_message) {
     const user = await userService.updateUser(req.params.id, req.body);
     res.json(user);
-  } catch (err) {
-    next(err);
-  }
+  } 
 });
 
 // DELETE route for deleting a user
-router.delete('/:id', async (req, res, next) => {
-  try {
+router.delete('/:id',updateUserValid, responseMiddleware, async (req, res, next) => {
+  if (!req.error_message) {
     await userService.deleteUser(req.params.id);
     res.json({ message: 'User deleted successfully' });
-  } catch (err) {
-    next(err);
   }
 });
 
