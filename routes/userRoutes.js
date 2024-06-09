@@ -13,12 +13,10 @@ const router = Router();
 
 // GET route for retrieving all users
 router.get('/', async (req, res, next) => {
-  try {
+  if (!req.error_message) {
     const users = await userService.getAllUsers();
     res.json(users);
-  } catch (err) {
-    next(err);
-  }
+  } 
 });
 
 // POST route for creating a new user

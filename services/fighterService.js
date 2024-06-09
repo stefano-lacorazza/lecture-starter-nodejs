@@ -1,7 +1,7 @@
 import { fighterRepository } from "../repositories/fighterRepository.js";
 
 class FighterService {
-  // TODO: Implement methods to work with fighters
+  // TODO: Implement methods to work with fighters DONE!
 
   async getAllFighters() {
     const fighters = fighterRepository.getAll();

@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // POST route for creating a new fighter
-router.post("/", createFighterValid, async (req, res, next) => {
+router.post("/", createFighterValid, responseMiddleware, async (req, res, next) => {
   if (!req.error_message) {
     const fighter = await fighterService.createFighter(req.body);
     res.json(fighter);
@@ -27,15 +27,17 @@ router.post("/", createFighterValid, async (req, res, next) => {
 });
 
 // GET route for retrieving a fighter by ID
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", updateFighterValid, responseMiddleware, async (req, res, next) => {
   if (!req.error_message) {
     const fighter = await fighterService.getFighterById(req.params.id);
+    //Turn first letter of thefighters name to uppercase
+    fighter.name = fighter.name.charAt(0).toUpperCase() + fighter.name.slice(1);
     res.json(fighter);
   } 
 });
 
 // PATCH route for updating a fighter
-router.patch("/:id", updateFighterValid, async (req, res, next) => {
+router.patch("/:id", updateFighterValid, responseMiddleware, async (req, res, next) => {
   if (!req.error_message) {
     const fighter = await fighterService.updateFighter(req.params.id, req.body);
     res.json(fighter);
@@ -43,7 +45,7 @@ router.patch("/:id", updateFighterValid, async (req, res, next) => {
 });
 
 // DELETE route for deleting a fighter
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", updateFighterValid, responseMiddleware, async (req, res, next) => {
   if (!req.error_message) {
     await fighterService.deleteFighter(req.params.id);
     res.json({ message: "Fighter deleted successfully" });
