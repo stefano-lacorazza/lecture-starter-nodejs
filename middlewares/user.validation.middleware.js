@@ -101,7 +101,7 @@ const updateUserValid = (req, res, next) => {
   // Check if the requested user exists
   const user = userRepository.getOne({ id: req.params.id });
   if (!user) {
-    req.error_message = "User not found!";
+    req.error_message = "User not found";
   }
   next();
 };

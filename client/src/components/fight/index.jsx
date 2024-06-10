@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { createFight } from '../../services/domainRequest/fightRequest';
 import { getFighters } from '../../services/domainRequest/fightersRequest';
 import NewFighter from '../newFighter';
 import Fighter from '../fighter';
@@ -21,8 +21,15 @@ class Fight extends React.Component {
         }
     }
 
-    onFightStart = () => {
-        
+    onFightStart = async () => {
+        let fighter1 = this.state.fighter1;
+        let fighter2 = this.state.fighter2;
+        const data = await createFight({ "fighter1" : fighter1.id , "fighter2" : fighter2.id});
+        if(data && !data.error) {
+            console.log(data);
+            
+        }
+
     }
 
     onCreate = (fighter) => {
